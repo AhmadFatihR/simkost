@@ -16,6 +16,10 @@ $routes->get('/admin', 'Admin::index');
 //Admin Routes Kamar
 $routes->get('/kamar', 'Kamar::index');
 $routes->post('/kamar/save', 'Kamar::save');
+$routes->delete('/kamar/delete/(:num)', 'Kamar::delete/$1');
+$routes->get('/kamar/update', 'Kamar::update');
+
+
 
 $routes->get('/penghuni', 'Admin::penghuni');
 

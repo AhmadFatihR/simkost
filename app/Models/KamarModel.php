@@ -16,4 +16,12 @@ class KamarModel extends Model
         'status',
     ];
 
+    public function getAllKamar()
+    {
+        return $this->findAll();
+    }
+    public function editKamar($id_kamar, $data)
+    {
+        return $this->update($id_kamar, $data);
+    }
 }
