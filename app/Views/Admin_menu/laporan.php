@@ -27,15 +27,44 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Form Tambah Laporan</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        
+                    <div class="container">
+          <form action="/laporan/save" method="post">
+            <div class="mb-3">
+                <label for="idkamar" class="form-label">Id Kamar:</label>
+                <input name="idkamar" type="text" class="form-control id="idkamar" placeholder="Masukkan Id Kamar" autofocus>
+            <div class="invalid-feedback">
+            </div>
+            </div>
+            <div class="mb-3">
+                <label for="hargakamar" class="form-label">Harga Kamar:</label>
+                <input name="hargakamar" type="number" class="form-control" id="harga" placeholder="Masukkan Harga Kamar" required>
+            </div>
+            <div class="mb-3">
+                <label for="nama" class="form-label">Nama:</label>
+                <input name="nama" type="text" class="form-control" id="nama" placeholder="Masukkan Nama" required>
+            </div>
+            <div class="mb-3">
+                <label for="tanggalbayar" class="form-label">Tanggal Bayar:</label>
+                <input name="tanggalbayar" type="date" class="form-control" id="tanggalbayar" placeholder="Masukkan Tanggal Bayar" required min="0">
+            </div>
+            <div class="mb-3">
+                <label for="sisa" class="form-label">Sisa</label>
+                <input name="sisa" class="form-control" type="text" id="sisa" placeholder="Masukkan Sisa" required>
+            </div>
+            <div class="mb-3">
+                <label for="status" class="form-label">Status</label>
+                <input name="status" class="form-control" type="text" id="status" placeholder="Masukkan Status" required>
+            </div>
+        
+    </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-primary">Simpan</button>
                     </div>
                     </div>
                 </div>
@@ -53,30 +82,11 @@
                     <th scope="col">Nama</th>
                     <th scope="col">Tanggal Bayar</th>
                     <th scope="col">Sisa</th>
-                    <th scope="col">Stats</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                    <th scope="row">KP01</th>
-                    <td>Kania</td>
-                    <td>KM01</td>
-                    <td>Jakarta</td>
-                    <td>2023-01-12</td>
-                    <td>2023-02-11</td>
-                    <td></td>
-                    </tr>
-                    <tr>
-                    <th scope="row">KP02</th>
-                    <td>Ridha</td>
-                    <td>KM02</td>
-                    <td>Surabaya</td>
-                    <td>2023-02-02</td>
-                    <td></td>
-                    <td></td>
-                    </tr>
-                </tbody>
+               
                 </table>
 
             

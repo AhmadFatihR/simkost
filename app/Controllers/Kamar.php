@@ -11,77 +11,195 @@ class Kamar extends BaseController
 
     public function __construct()
     {
-        $this-> kamarModel = new KamarModel();
+        $this->kamarModel = new KamarModel();
     }
+
     public function index()
     {
-        session();
-        $dataKamar = $this->kamarModel->findAll();
+        $kamarModel = new KamarModel();
+
+        $keyword = $this->request->getVar('keyword');
+        if ($keyword) {
+            $dataKamar = $kamarModel->search($keyword);
+        } else {
+            $dataKamar = $kamarModel->getKamarWithPenghuni();
+        }
+    
         $data = [
             'judul' => 'Kamar Kost | SIMKOST',
             'subjudul' => 'Kamar Kost',
             'kamar' => $dataKamar,
             'validation' => \Config\Services::validation()
         ];
-        
-        echo view('layout/header',$data);
-        echo view('layout/sidebar2');
-        echo view('layout/topbar',$data);
-        echo view('Admin_menu/kamar_kost');
+    
+        // Update room status for occupied rooms
+        $userModel = new \App\Models\PenghuniModel();
+        $dataUser = $userModel->get()->getResult();
+        foreach ($dataUser as $row) {
+            $modelKamar = new \App\Models\KamarModelNew();
+            $modelKamar->where([
+                'status' => 'belum terisi',
+                'id_kamar' => $row->id_kamar
+            ])->set([
+                'status' => 'terisi'
+            ])->update();
+        }
+    
+        echo view('layout/header', $data);
+        echo view('layout/sidebar_admin');
+        echo view('layout/topbar', $data);
+        echo view('Admin_menu/kamar_kost', $data);
         echo view('layout/footer');
     }
+    
 
     public function save()
     {
-        if(!$this->validate([
-            'nomor_kamar'=>'required|is_unique[kamar.nomor_kamar]'
+        $validation = \Config\Services::validation();
+
+        if (!$this->validate([
+            'nomor_kamar' => [
+                'rules' => 'required|is_unique[kamar.nomor_kamar]',
+                'errors' => [
+                    'required' => 'Nomor kamar harus diisi.',
+                    'is_unique' => 'Nomor kamar sudah terdaftar.'
+                ]
+            ],
+            'gambar' => [
+                'rules' => 'max_size[gambar,10024]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'max_size' => 'Ukuran gambar terlalu besar (maks. 10MB).',
+                    'is_image' => 'File yang diunggah harus berupa gambar.',
+                    'mime_in' => 'Format gambar tidak sesuai (hanya .jpg, .jpeg, .png yang diizinkan).'
+                ]
+            ]
         ])) {
-            $validation = \Config\Services::validation();
-            return redirect()->to('/kamar')->withInput()->with('validation',$validation);
+            // Menampilkan error validasi
+            return redirect()->to('/kamar')->withInput()->with('validation', $validation);
+        }
+
+        // Ambil data dari form
+        $data = $this->request->getVar();
+
+        // Format harga menjadi angka tanpa tanda mata uang atau pemisah ribuan
+        $data['harga'] = (int) str_replace(['Rp ', '.', ','], '', $data['harga']);
+
+        //ambil gambar
+        $fileGambar = $this->request->getFile('gambar');
+        // apakah tidak ada gambar yg di upload
+        if ($fileGambar->getError() == 4) {
+            $namaGambar = 'default.jpg';
+        }else{
+        // generate nama gambar baru
+        $namaGambar = $fileGambar->getRandomName();
+        // pindahkan file ke folder img
+        $fileGambar->move('img');
         }
 
 
-        $data = $this->request->getVar();
-        // dd($data);
-
+        // Simpan data ke dalam database
         $request = $this->kamarModel->save([
-        'id_kamar' => '',
-        'nomor_kamar' => $data['nomor_kamar'],
-        'harga' => $data['harga'],
-        'fasilitas' => $data['fasilitas'],
-        'ukuran' => $data['ukuran_kamar'],
-        'status' => 'belum terisi'
+            'id_kamar' => '',
+            'nomor_kamar' => $data['nomor_kamar'],
+            'harga' => $data['harga'],
+            'fasilitas' => $data['fasilitas'],
+            'ukuran' => $data['ukuran_kamar'],
+            'gambar' => $namaGambar,
+            'alamat' => $data['alamat'],
+            'status' => 'belum terisi'
         ]);
 
-        if ($request){
+        // Periksa apakah penyimpanan berhasil
+        if ($request) {
+            return redirect()->to('kamar');
+        } else {
+            // Tambahkan pesan kesalahan atau log jika diperlukan
+            dd($this->kamarModel->errors());
+        }
+    }
+    
+    
+    public function delete($id_kamar)
+    {
+        //cari gambar berdasar id_kamar
+        $kamar = $this->kamarModel->find($id_kamar);
+
+        //cek jika file gambarnya default.jpg
+        if($kamar['gambar'] != 'default.jpg'){
+            //hapus file gambar
+            unlink('img/'. $kamar['gambar']);
+        }
+
+        $request = $this->kamarModel->delete($id_kamar);
+
+        if ($request) {
             return redirect()->to('kamar');
         }
     }
 
-
-    public function delete($id_kamar)
-    {
-        $request = $this->kamarModel->delete($id_kamar);
-
-        if($request){
-        return redirect()->to('kamar');
-        }
-    }
-
     public function update()
-    {
-        $id_kamar = $this->request->getGet('id_kamar');
-        $kamarmodel = new KamarModel();
-        $dataToUpdate = [
-            'nomor_kamar' => $this->request->getGet('nomor_kamar'),
-            'harga' => $this->request->getGet('harga'),
-            'fasilitas' => $this->request->getGet('fasilitas'),
-            'ukuran' => $this->request->getGet('ukuran_kamar')
-        ];
-    
-        $kamarmodel->update($id_kamar, $dataToUpdate);
-    
-        return redirect()->to('kamar');
+{
+    $fileGambar = $this->request->getFile('gambar');
+    if ($fileGambar->getName() == '') {
+        echo 'tidak mengupdate gambaer';
     }
+    else {
+        echo 'update gambar';
+    };
+    $id_kamar = $this->request->getPost('id_kamar');
+    $kamarmodel = new KamarModel();
+
+    $validationRules = [
+        'nomor_kamar' => [
+            'rules' => "required|is_unique[kamar.nomor_kamar,id_kamar,$id_kamar]",
+            'errors' => [
+                'required' => 'Nomor kamar harus diisi.',
+                'is_unique' => 'Nomor kamar sudah terdaftar.'
+            ]
+        ],
+        'gambar' => [
+            'rules' => 'max_size[gambar,10024]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
+            'errors' => [
+                'max_size' => 'Ukuran gambar terlalu besar (maks. 10MB).',
+                'is_image' => 'File yang diunggah harus berupa gambar.',
+                'mime_in' => 'Format gambar tidak sesuai (hanya .jpg, .jpeg, .png yang diizinkan).'
+            ]
+        ]
+    ];
+
+    if (!$this->validate($validationRules)) {
+        return redirect()->back()->withInput()->with('validation', $this->validator);
+    }
+
+    $dataToUpdate = [
+        'nomor_kamar' => $this->request->getPost('nomor_kamar'),
+        'harga' => $this->request->getPost('harga'),
+        'fasilitas' => $this->request->getPost('fasilitas'),
+        'ukuran' => $this->request->getPost('ukuran_kamar'),
+        'alamat' => $this->request->getPost('alamat'),
+    ];
+
+    // Handle the image update
+    $fileGambar = $this->request->getFile('gambar');
+
+    if ($fileGambar->isValid() && !$fileGambar->hasMoved()) {
+        $existingKamar = $kamarmodel->find($id_kamar);
+        if ($existingKamar['gambar'] != 'default.jpg') {
+            unlink('img/' . $existingKamar['gambar']);
+        }
+
+        $namaGambar = $fileGambar->getRandomName();
+        $fileGambar->move('img', $namaGambar);
+        $dataToUpdate['gambar'] = $namaGambar;
+    }
+
+    if ($kamarmodel->update($id_kamar, $dataToUpdate)) {
+        return redirect()->to('kamar');
+    } else {
+        return redirect()->back()->with('errors', $kamarmodel->errors());
+    }
+}
+
+    
 
 }

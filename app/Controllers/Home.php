@@ -11,7 +11,7 @@ class Home extends BaseController
             'subjudul' => 'Beranda'
         ];
         echo view('layout/header',$data);
-        echo view('layout/sidebar');
+        echo view('layout/sidebar_user');
         echo view('layout/topbar');
         echo view('user_menu/dashboard',$data);
         echo view('layout/footer');
@@ -25,7 +25,7 @@ class Home extends BaseController
             'subjudul' => 'Komplain'
         ];
         echo view('layout/header',$data);
-        echo view('layout/sidebar');
+        echo view('layout/sidebar_user');
         echo view('layout/topbar');
         echo view('user_menu/komplain',$data);
         echo view('layout/footer');  
@@ -38,7 +38,7 @@ class Home extends BaseController
             'subjudul' => 'History'
         ];
         echo view('layout/header',$data);
-        echo view('layout/sidebar');
+        echo view('layout/sidebar_user');
         echo view('layout/topbar');
         echo view('user_menu/history',$data);
         echo view('layout/footer');    

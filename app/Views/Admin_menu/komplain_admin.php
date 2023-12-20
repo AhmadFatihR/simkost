@@ -19,7 +19,7 @@
                     <th scope="col">Nama</th>
                     <th scope="col">Kamar</th>
                     <th scope="col">Perihal Komplain</th>
-                    <th scope="col">Lama Komplain</th>
+                    <th scope="col">Tanggal Komplain</th>
                     <th scope="col">Keterangan</th>
                     </tr>
                 </thead>

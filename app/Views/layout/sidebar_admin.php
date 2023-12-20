@@ -58,7 +58,7 @@
                 <span>
                 <i class="ti ti-bell"></i>
                 </span>
-                <span class="hide-menu">Komplain</span>
+                <span class="hide-menu">Laporan Komplain</span>
               </a>
             </li>
             <li class="sidebar-item">
