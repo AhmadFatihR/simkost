@@ -25,7 +25,7 @@ class AkunModel extends Model
     $user = $this->where('username', $username)->first();
 
     // Periksa apakah pengguna ditemukan dan cocok dengan password yang diberikan
-    if ($user && password_verify($password, $user['password'])) {
+    if ($user && $password == $user['password']) {
         return $user; // Mengembalikan data pengguna jika login berhasil
     }
 

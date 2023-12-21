@@ -61,12 +61,19 @@ class Login extends BaseController
         if ($user !== null) {
             // Login berhasil
             $role = $user['role'];
-
             // Lakukan redireksi sesuai peran (role) pengguna
             if ($role === 'admin') {
-                return redirect()->to('/admin/dashboard');
+                session()->set('role', 'admin');
+                session()->set('status_login', true);
+                session()->set('username', $user['username']);
+                session()->set('password', $user['password']);
+                return redirect()->to('/admin');
             } else {
-                return redirect()->to('/user/dashboard');
+                session()->set('role', 'user');
+                session()->set('status_login', true);
+                session()->set('username', $user['username']);
+                session()->set('password', $user['password']);
+                return redirect()->to('/');         
             }
         } else {
             // Login gagal, kembali ke halaman login
