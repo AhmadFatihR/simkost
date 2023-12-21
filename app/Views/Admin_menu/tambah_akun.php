@@ -3,51 +3,6 @@
         <div class="card-body">
             <div class="row mb-3">
                 <div class="col">
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <i class="ti ti-square-plus fa-3"></i> Tambah
-                    </button>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Form Tambah Akun</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="/akun_user/save" method="post">
-                                        <div class="container">
-                                            <div class="mb-3">
-                                                <label for="id_penghuni" class="form-label">Nama Penghuni:</label>
-                                                <select name="id_penghuni" class="form-select" aria-label="Pilih Nomor Kamar" id="id_penghuni" required>
-                                                <option selected disabled>Pilih Nama Penghuni</option>
-                                                <?php foreach($dataPenghuni as $data): ?>
-                                                    <option value="<?= $data['id_penghuni']; ?>"><?= $data['nama_penghuni']; ?> (<?= $data['kdpenghuni']; ?>)</option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="username" class="form-label">Username:</label>
-                                                <input name="username" type="text" class="form-control" id="username" placeholder="Masukkan Username" required>
-                                                <div class="invalid-feedback">
-                                                    <?= $validation->getError('username'); ?>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="password" class="form-label">Password:</label>
-                                                <input name="password" type="text" class="form-control" id="password" placeholder="Masukkan Password" required min="0">
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary">Tambah</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="col"></div>
@@ -66,9 +21,8 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Kode Penghuni</th>
-                        <th scope="col">Nama</th>
-                        <th scope="col">Username</th>
+
+                        <th scope="col">Username (Kode Penghuni)</th>
                         <th scope="col">Password</th>
                         <th scope="col">Level</th>
                         <th scope="col">Aksi</th>
@@ -77,9 +31,7 @@
                 <tbody>
                     <?php foreach ($user as $u) : ?>
                     <tr>
-                        <th scope="row"><?= $u['kdpenghuni']; ?></th>
-                        <td><?= $u['nama_penghuni']; ?></td>
-                        <td><?= $u['username']; ?></td>
+                        <th scope="row"><?= $u['username']; ?></th>
                         <td><?= $u['password']; ?></td>
                         <td><?= $u['role']; ?></td>
                         <td>
@@ -109,16 +61,6 @@
                         <form action="/akun_user/update" method="get">
                             <input type="hidden" name="id_user" id="editIdUser" value="<?= $u['id_user']; ?>">
                             <div class="modal-body">
-                                <div class="mb-3">
-                                    <label for="editNamaPenghuni" class="form-label">Nama Penghuni</label>
-                                    <select name="id_penghuni" class="form-select" aria-label="Pilih Nama Penghuni" id="id_user" aria-label="Disabled input example">
-                                        <option disabled>Pilih Nama Penghuni</option>
-                                        <?php foreach($dataPenghuni as $data): ?>
-                                            <?php $selected = ($data['id_penghuni'] == $u['id_penghuni']) ? 'selected' : ''; ?>
-                                            <option value="<?= $data['id_penghuni']; ?>" <?= $selected; ?>><?= $data['nama_penghuni']; ?> (<?= $data['kdpenghuni']; ?>)</option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Username</label>
                                     <input type="text" class="form-control" name="username" id="username" value="<?= $u['username']; ?>">

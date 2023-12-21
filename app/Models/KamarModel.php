@@ -17,25 +17,6 @@ class KamarModel extends Model
         'gambar',
         'status',
     ];
-
-    public function getKamarWithPenghuni()
-    {
-        $builder = $this->db->table('kamar');
-        $builder->select('kamar.*, penghuni_kos.nama_penghuni');
-        $builder->join('penghuni_kos', 'penghuni_kos.id_kamar = kamar.id_kamar', 'left');
-        $query = $builder->get();
-    
-        $results = $query->getResultArray();
-    
-        // Pastikan kolom 'nama_penghuni' ada sebelum mengaksesnya
-        foreach ($results as &$result) {
-            if (!isset($result['nama_penghuni'])) {
-                $result['nama_penghuni'] = null; // Atau nilai default yang sesuai
-            }
-        }
-    
-        return $results;
-    }
     
 
     public function getAllKamar()

@@ -22,7 +22,7 @@ class Kamar extends BaseController
         if ($keyword) {
             $dataKamar = $kamarModel->search($keyword);
         } else {
-            $dataKamar = $kamarModel->getKamarWithPenghuni();
+            $dataKamar = $kamarModel->getAllKamar();
         }
     
         $data = [

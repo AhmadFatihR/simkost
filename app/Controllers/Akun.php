@@ -19,15 +19,15 @@ class Akun extends BaseController
 
     public function index()
     {
-        $dataUser= $this->akunModel->getAkunPenghuni();
-        $dataPenghuni = $this->penghuniModel->getAllPenghuni();
-        $data = [
-            'judul' => 'Akun Penghuni | SIMKOST',
-            'subjudul' => 'Akun User (Penghuni)',
-            'user' => $dataUser,
-            'dataPenghuni' => $dataPenghuni,
-            'validation' => \Config\Services::validation(),
-        ];
+        $keyword = $this->request->getVar('keyword');
+    $dataUser = $keyword ? $this->akunModel->search($keyword) : $this->akunModel->getUsersByRole('user');
+
+    $data = [
+        'judul' => 'Akun Penghuni | SIMKOST',
+        'subjudul' => 'Akun User (Penghuni)',
+        'user' => $dataUser, // Data pengguna dengan role 'user'
+        'validation' => \Config\Services::validation(),
+    ];
         echo view('layout/header',$data);
         echo view('layout/sidebar_admin');
         echo view('layout/topbar',$data);

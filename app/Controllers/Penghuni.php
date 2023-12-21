@@ -18,7 +18,16 @@ class Penghuni extends BaseController
 
     public function index()
     {
-        $data['penghuni'] = $this->penghuniModel->getPenghuniWithKamar(); // Menggunakan metode yang sesuai
+        $penghuniModel = new PenghuniModel();
+
+        $keyword = $this->request->getVar('keyword');
+        if ($keyword){
+            $dataPenghuni = $penghuniModel->search($keyword);
+            } else {
+                $dataPenghuni = $penghuniModel->getPenghuniWithKamar();
+        }
+
+        $data['penghuni'] = $dataPenghuni; // Menggunakan metode yang sesuai
         $data['judul'] = 'Penghuni Kost | SIMKOST';
         $data['subjudul'] = 'Penghuni Kost';
         $data['validation'] = \Config\Services::validation();
@@ -33,29 +42,44 @@ class Penghuni extends BaseController
     public function save()
     {
         $data = $this->request->getVar();
-        //dd($data);
 
         if (!$this->validate([
             'kdpenghuni' => 'required|is_unique[penghuni_kos.kdpenghuni]'
         ])) {
-            $validation = \Config\Services::validation();
-            return redirect()->to('/penghuni')->withInput()->with('validation', $validation);
+            return redirect()->to('/penghuni')->withInput()->with('validation', \Config\Services::validation());
         }
 
-       
-        $request = $this->penghuniModel->save([
-            'id_penghuni' => '',
-            'kdpenghuni' => $data['kdpenghuni'],
-            'nama_penghuni' => $data['nama_penghuni'],
-            'id_kamar' => $data['nomor_kamar'],
-            'nohp' => $data['nohp'],
-            'tgl_masuk'=>$data['tgl_masuk']
-        ]);
+        $userData = [
+            'username' => $data['kdpenghuni'],
+            'password' => $data['password'],
+            'role' =>'user',
+        ];
 
-        if ($request) {
-            return redirect()->to('penghuni');
+        $akunModel = new \App\Models\AkunModel(); // Tambahkan AkunModel jika belum diakses sebelumnya
+        $userId = $akunModel->simpanDataUser($userData);
+
+        if ($userId) {
+            $insertData = [
+                'kdpenghuni' => $data['kdpenghuni'],
+                'nama_penghuni' => $data['nama_penghuni'],
+                'id_kamar' => $data['nomor_kamar'],
+                'nohp' => $data['nohp'],
+                'tgl_masuk' => $data['tgl_masuk'],
+                'id_user' => $userId,
+            ];
+
+            $saved = $this->penghuniModel->save($insertData);
+
+            if ($saved) {
+                return redirect()->to('/penghuni')->with('success', 'Data berhasil disimpan');
+            } else {
+                return redirect()->to('/penghuni')->with('error', 'Gagal menyimpan data penghuni');
+            }
+        } else {
+            return redirect()->to('/penghuni')->with('error', 'Gagal menyimpan data pengguna');
         }
     }
+
 
     public function delete($id_penghuni)
     {

@@ -13,7 +13,8 @@ class PenghuniModel extends Model
         'nama_penghuni',
         'id_kamar',
         'tgl_masuk',
-        'nohp'
+        'nohp',
+        'id_user'
     ];
 
     public function getPenghuniWithKamar()
@@ -21,6 +22,16 @@ class PenghuniModel extends Model
         $builder = $this->db->table('penghuni_kos');
         $builder->select('penghuni_kos.*, kamar.nomor_kamar');
         $builder->join('kamar', 'kamar.id_kamar=penghuni_kos.id_kamar');
+        $query = $builder->get();
+
+        return $query->getResultArray();
+    }
+
+    public function getPenghuniWithUser()
+    {
+        $builder = $this->db->table('penghuni_kos');
+        $builder->select('penghuni_kos.*, user.username'); // Menambahkan kolom username dari tabel user
+        $builder->join('user', 'user.id_user = penghuni_kos.id_user'); // Join dengan tabel user
         $query = $builder->get();
 
         return $query->getResultArray();
@@ -34,5 +45,19 @@ class PenghuniModel extends Model
     public function getJumlahPenghuni()
     {
        return $this->db->table('penghuni_kos')->countAll();
+    }
+
+    public function search($keyword)
+    {
+        $builder = $this->db->table('penghuni_kos');
+        $builder->select('penghuni_kos.*, kamar.nomor_kamar');
+        $builder->join('kamar', 'kamar.id_kamar = penghuni_kos.id_kamar');
+        $builder->like('nama_penghuni', $keyword)
+                ->orLike('kdpenghuni', $keyword)
+                ->orLike('penghuni_kos.id_kamar', $keyword)
+                ->orLike('nohp', $keyword);
+    
+        $query = $builder->get();
+        return $query->getResultArray();
     }
 }

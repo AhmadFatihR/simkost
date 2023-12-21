@@ -22,7 +22,7 @@
                     <div class="container">
             <form action="/penghuni/save" method="post">
                 <div class="mb-3">
-                    <label for="kdpenghuni" class="form-label">Kode Penghuni:</label>
+                    <label for="kdpenghuni" class="form-label">Kode Penghuni (Username akun):</label>
                     <input name="kdpenghuni" type="text" class="form-control <?= ($validation->hasError('kdpenghuni')); ?>" id="kdpenghuni" placeholder="Masukkan Kode Penghuni" autofocus>
                     <div class="invalid-feedback">
                         <?= $validation->getError('kdpenghuni'); ?>
@@ -50,6 +50,10 @@
                     <label for="nohp" class="form-label">Nomor HP:</label>
                     <input name="nohp" type="text" class="form-control" placeholder="Masukkan No.HP" required>
                 </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password Akun:</label>
+                        <input name="password" type="password" class="form-control" id="password" placeholder="Masukkan Password" required>
+                    </div>
             </div>
             
                 </div>

@@ -22,6 +22,7 @@ $routes->delete('/kamar/delete/(:num)', 'Kamar::delete/$1');
 $routes->post('/kamar/update', 'Kamar::update');
 //Admin Routes Penghuni
 $routes->get('/penghuni', 'Penghuni::index');
+$routes->post('/penghuni', 'Penghuni::index');
 $routes->post('/penghuni/save', 'Penghuni::save');
 $routes->delete('/penghuni/delete/(:num)','Penghuni::delete/$1');
 $routes->get('/penghuni/update','Penghuni::update');
@@ -31,11 +32,13 @@ $routes->get('/laporan', 'Admin::laporan');
 $routes->get('/komplain_user', 'Admin::komplain');
 //Admin Routes Akun
 $routes->get('/akun_user', 'Akun::index');
+$routes->post('/akun_user', 'Akun::index');
 $routes->post('/akun_user/save', 'Akun::save');
 $routes->delete('/akun_user/delete/(:num)', 'Akun::delete/$1');
 $routes->get('akun_user/update', 'Akun::update');
 
 //Routes Login
 $routes->get('/login', 'Login::Index');
+$routes->post('login/prosesLogin','Login::prosesLogin');
 
 
