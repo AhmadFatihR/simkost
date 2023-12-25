@@ -44,7 +44,7 @@ class PenghuniModel extends Model
 
     public function getJumlahPenghuni()
     {
-       return $this->db->table('penghuni_kos')->countAll();
+        return $this->db->table('penghuni_kos')->countAll();
     }
 
     public function search($keyword)
@@ -56,7 +56,7 @@ class PenghuniModel extends Model
                 ->orLike('kdpenghuni', $keyword)
                 ->orLike('penghuni_kos.id_kamar', $keyword)
                 ->orLike('nohp', $keyword);
-    
+
         $query = $builder->get();
         return $query->getResultArray();
     }

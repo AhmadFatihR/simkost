@@ -34,7 +34,7 @@
                 <span>
                   <i class="ti ti-history"></i>
                 </span>
-                <span class="hide-menu">History Tagihan</span>
+                <span class="hide-menu">Tagihan</span>
               </a>
             </li>
             <li class="sidebar-item">

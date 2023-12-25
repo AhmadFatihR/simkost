@@ -2,46 +2,55 @@
         <div class="card">
           <div class="card-body">
             <div class="row mb-3">
-            <div class="col mb-3">
-                <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                </form>
+              <div class="col">
+              <div class="col">
                 </div>
-
-                <div class="col"></div>
-                <div class="col"></div>
-
-
-                <table class="table">
+                <table class="table align-middle">
                 <thead>
-                    <tr>
-                    <th scope="col">Id Penghuni</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Kamar</th>
-                    <th scope="col">Perihal Komplain</th>
+                    <tr class="text-center">
+                    <th scope="col">username</th>
                     <th scope="col">Tanggal Komplain</th>
-                    <th scope="col">Keterangan</th>
+                    <th scope="col">Nomor Kamar</th>
+                    <th scope="col">Detail</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <th scope="row">KP01</th>
-                    <td>Kania</td>
-                    <td>KM01</td>
-                    <td>Kegaduhan</td>
-                    <td>10 Hari</td>
-                    <td></td>
-                    </tr>
-                    <tr>
-                    <th scope="row">KP02</th>
-                    <td>Ridha</td>
-                    <td>KM02</td>
-                    <td>Fasilitas</td>
-                    <td>5 Hari</td>
-                    <td></td>
+                  <?php foreach ($komplain as $k) : ?>
+                    <tr class="text-center">
+                    <th scope="row"><?= $k['nama_penghuni']; ?></th>
+                    <td><?= date('d F Y', strtotime($k['tanggal_komplain'])); ?></td>
+                    <td><?= $k['nomor_kamar']; ?></td>
+                    <td>
+                    <button type="button" class="btn btn-primary btn" data-bs-toggle="modal" data-bs-target="#detail">
+                    Detail
+                    </button>
+                    </td>
                     </tr>
                 </tbody>
-                </table>
-
+                
+                <!-- Modal detail -->
+                <div class="modal fade" id="detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Detail Komplain </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="card">
+  <div class="card-body">
+    <h5 class="card-title"><?= $k['nama_penghuni']; ?></h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary"><?= date('d F Y', strtotime($k['tanggal_komplain'])); ?></h6>
+    <p class="card-text"><?= $k['komplain_text']; ?></p>
+    <p class="card-subtitle mb-2 text-body-secondary"></p>
+  </div>
+  <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+</div>
+    </div>
+  </div>
+</div>
+</table>
+<?php endforeach; ?>
         </div>
       </div>

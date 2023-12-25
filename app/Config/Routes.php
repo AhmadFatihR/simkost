@@ -9,8 +9,9 @@ use CodeIgniter\Router\RouteCollection;
 
  //User Routes
 $routes->get('/', 'Home::index', ['filter' => 'isPenghuni']);
-$routes->get('/komplain', 'Home::Komplain', ['filter' => 'isPenghuni']);
-$routes->get('/history', 'Home::history',['filter' => 'isPenghuni']);
+$routes->get('/komplain', 'KomplainUser::index', ['filter' => 'isPenghuni']);
+$routes->post('/komplain/save', 'KomplainUser::save', ['filter' => 'isPenghuni']);
+$routes->get('/history', 'TagihanUser::index',['filter' => 'isPenghuni']);
 
 //Admin Routes
 $routes->get('/admin', 'Admin::index', ['filter' => 'isAdmin']);
@@ -27,9 +28,12 @@ $routes->post('/penghuni/save', 'Penghuni::save', ['filter' => 'isAdmin']);
 $routes->delete('/penghuni/delete/(:num)','Penghuni::delete/$1', ['filter' => 'isAdmin']);
 $routes->get('/penghuni/update','Penghuni::update', ['filter' => 'isAdmin']);
 
-$routes->get('/laporan', 'Admin::laporan', ['filter' => 'isAdmin']);
+$routes->get('/laporan', 'Tagihan::index', ['filter' => 'isAdmin']);
+$routes->post('/laporan/save', 'Tagihan::save', ['filter'=>'isAdmin']);
+$routes->delete('/laporan/delete/(:num)', 'Tagihan::delete/$1', ['filter'=>'isAdmin']);
+$routes->get('/laporan/update', 'Tagihan::update', ['filter' => 'isAdmin']);
 
-$routes->get('/komplain_user', 'Admin::komplain', ['filter' => 'isAdmin']);
+$routes->get('/komplain_user', 'Komplain::index', ['filter' => 'isAdmin']);
 //Admin Routes Akun
 $routes->get('/akun_user', 'Akun::index', ['filter' => 'isAdmin']);
 $routes->post('/akun_user', 'Akun::index', ['filter' => 'isAdmin']);

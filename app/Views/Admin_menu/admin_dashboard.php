@@ -50,7 +50,7 @@
                     <div class="row align-items-start">
                         <div class="col-8">
                             <h5 class="card-title mb-3 fw-semibold">Jumlah Komplain</h5>
-                            <h4 class="fw-semibold mb-0">2</h4>
+                            <h4 class="fw-semibold mb-0"><?= $jumlah_komplain; ?></h4>
                         </div>
                         <div class="col-4">
                             <div class="d-flex justify-content-end">

@@ -61,6 +61,7 @@ class Login extends BaseController
         if ($user !== null) {
             // Login berhasil
             $role = $user['role'];
+            session()->set('id_user', $user['id_user']);
             // Lakukan redireksi sesuai peran (role) pengguna
             if ($role === 'admin') {
                 session()->set('role', 'admin');

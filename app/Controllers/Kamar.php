@@ -36,7 +36,7 @@ class Kamar extends BaseController
         $userModel = new \App\Models\PenghuniModel();
         $dataUser = $userModel->get()->getResult();
         foreach ($dataUser as $row) {
-            $modelKamar = new \App\Models\KamarModelNew();
+            $modelKamar = new \App\Models\KamarModel();
             $modelKamar->where([
                 'status' => 'belum terisi',
                 'id_kamar' => $row->id_kamar
