@@ -9,7 +9,6 @@
                         <th scope="col">Jumlah pembayaran</th>
                         <th scope="col">Terakhir Pembayaran</th>
                         <th scope="col">Status</th>
-                        <th scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
