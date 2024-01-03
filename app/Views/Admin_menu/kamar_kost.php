@@ -48,7 +48,6 @@
                 <label for="formFile" class="form-label">Foto Kost</label>
                 <input name="gambar" class="form-control" type="file" id="gambar" placeholder="Masukkan Foto Kamar">
             </div>
-        
     </div>
                     </div>
                     <div class="modal-footer">
@@ -212,3 +211,4 @@
           </div>
         </div>
       </div>
+

@@ -27,6 +27,9 @@ class AkunModel extends Model
     // Periksa apakah pengguna ditemukan dan cocok dengan password yang diberikan
     if ($user && $password == $user['password']) {
         return $user; // Mengembalikan data pengguna jika login berhasil
+    } else {
+        session()->setFlashdata('gagal', 'Username atau password salah');
+        return redirect()->back()->withInput();
     }
 
     return null; // Mengembalikan null jika login gagal

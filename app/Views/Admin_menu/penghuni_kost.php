@@ -38,7 +38,7 @@
                 <select name="nomor_kamar" class="form-select" aria-label="Pilih Nomor Kamar" id="nomor_kamar" required>
                 <option selected disabled>Pilih Nomor Kamar</option>
                 <?php foreach($dataKamar as $data): ?>
-                    <option value="<?= $data['id_kamar']; ?>"><?= $data['nomor_kamar']; ?></option>
+                    <option value="<?= $data['id_kamar']; ?>" required><?= $data['nomor_kamar']; ?></option>
                     <?php endforeach; ?>
                 </select>
                 </div>

@@ -41,12 +41,23 @@
                                         <input name="tanggal_pembayaran" class="form-control" type="date" id="tanggal_pembayaran" placeholder="Masukkan Tanggal Pembayaran" required>
                                     </div>
                                     <div class="mb-3">
+                                        <label for="bulan" class="form-label">Bulan Sewa :</label>
+                                        <select name="bulan" class="form-select" aria-label="Pilih Bulan Sewa" id="bulan" required>
+                                        <option selected disabled>Pilih Bulan Sewa</option>
+                                        <?php foreach($bulan_sewa as $bln): ?>
+                                            <option value="<?= $bln ?>"><?= $bln ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="status_pembayaran" class="form-label">Status :</label>
                                         <select name="status_pembayaran" class="form-select" aria-label="Pilih Nomor Kamar" id="nama_penghuni" required>
                                         <option selected disabled>Pilih Status</option>
-                                        <?php foreach($status_opsi as $status): ?>
+                                        <option value="Lunas">Lunas</option>
+                                        <option value="Belum lunas">Belum lunas</option>
+                                        <!-- <?php foreach($status_opsi as $status): ?>
                                             <option value="<?= $status ?>"><?= $status ?></option>
-                                            <?php endforeach; ?>
+                                            <?php endforeach; ?> -->
                                         </select>
                                     </div>
                                 </div>
@@ -66,6 +77,7 @@
                         <th scope="col">Nama penghuni</th>
                         <th scope="col">Jumlah pembayaran</th>
                         <th scope="col">Terakhir Pembayaran</th>
+                        <th scope="col">Bulan Sewa</th>
                         <th scope="col">Status</th>
                         <th scope="col">Aksi</th>
                     </tr>
@@ -76,6 +88,7 @@
                         <th scope="row"><?= $t['nama_penghuni']; ?></th>
                         <td class="harga"><?= 'Rp ' . number_format($t['jumlah_pembayaran'], 0, ',', '.'); ?></td>
                         <td><?= date('d F Y', strtotime($t['tanggal_pembayaran'])); ?></td>
+                        <td><?= $t['bulan']; ?></td>
                         <td><?= $t['status_pembayaran']; ?></td>
                         <td>
                         <form action="/laporan/delete/<?= $t['id_transaksi']; ?>" method="post" class="d-inline">
@@ -125,9 +138,18 @@
                                         <input name="tanggal_pembayaran" class="form-control" type="date" id="tanggal_pembayaran" value="<?= $t['tanggal_pembayaran']; ?>" required>
                                     </div>
                                     <div class="mb-3">
+                                        <label for="bulan" class="form-label">Bulan Sewa :</label>
+                                        <select name="bulan" class="form-select" aria-label="Pilih Bulan Sewa" id="bulan" required>
+                                        <option selected value="<?= $t['bulan']; ?>"><?= $t['bulan']; ?></option>
+                                        <?php foreach($bulan_sewa as $bln): ?>
+                                            <option value="<?= $bln ?>"><?= $bln ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="status_pembayaran" class="form-label">Status :</label>
                                         <select name="status_pembayaran" class="form-select" aria-label="Pilih Nomor Kamar" required>
-                                            <option selected disabled>Pilih Status</option>
+                                            <option selected value="<?= $t['status_pembayaran']; ?>"><?= $t['status_pembayaran']; ?></option>
                                             <option value="Lunas">Lunas</option>
                                             <option value="Belum lunas">Belum lunas</option>
 

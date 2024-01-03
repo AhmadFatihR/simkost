@@ -72,6 +72,16 @@ class Akun extends BaseController
     {
         $id_user = $this->request->getGet('id_user');
         $akunModel = new AkunModel();
+        
+        $validationRules = [
+            'username' => [
+                'rules'=>"required|is_unique[user.username,$id_user]"]
+            ];
+
+            if (!$this->validate($validationRules)){
+                return redirect()->back()->withInput()->with('validation', $this->validator);
+            }
+
 
         $dataToUpdate = [
             'id_penghuni'=> $this->request->getGet('id_penghuni'),

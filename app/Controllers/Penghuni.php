@@ -71,12 +71,12 @@ class Penghuni extends BaseController
             $saved = $this->penghuniModel->save($insertData);
 
             if ($saved) {
-                return redirect()->to('/penghuni')->with('success', 'Data berhasil disimpan');
+                return redirect()->to('/penghuni');
             } else {
-                return redirect()->to('/penghuni')->with('error', 'Gagal menyimpan data penghuni');
+                return redirect()->to('/penghuni');
             }
         } else {
-            return redirect()->to('/penghuni')->with('error', 'Gagal menyimpan data pengguna');
+            return redirect()->to('/penghuni');
         }
     }
 
@@ -93,6 +93,16 @@ class Penghuni extends BaseController
     {
         $id_penghuni = $this->request->getGet('id_penghuni');
         $penghuniModel = new PenghuniModel();
+
+        $validationRules = [
+            'kdpenghuni' => [
+                'rules'=>"required|is_unique[penghuni_kos.kdpenghuni,id_penghuni,$id_penghuni]"]
+            ];
+
+            if (!$this->validate($validationRules)){
+                return redirect()->back()->withInput()->with('validation', $this->validator);
+            }
+
         $dataToUpdate = [
             'kdpenghuni' => $this->request->getGet('kdpenghuni'),
             'nama_penghuni' => $this->request->getGet('nama_penghuni'),

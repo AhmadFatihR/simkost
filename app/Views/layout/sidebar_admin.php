@@ -73,14 +73,16 @@
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Keluar</span>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="/login" aria-expanded="false">
-                <span>
-                  <i class="ti ti-logout"></i>
-                </span>
-                <span class="hide-menu">Logout</span>
-              </a>
-            </li>
+            <form action="/logout" method="post">
+              <li class="sidebar-item">
+                <button class="btn btn-secondary" type="submit" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-logout"></i>
+                  </span>
+                  <span class="hide-menu">Logout</span>
+                </button>
+              </li>
+            </form>
           </ul>
         </nav>
         <!-- End Sidebar navigation -->

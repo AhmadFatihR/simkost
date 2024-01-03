@@ -6,20 +6,25 @@
                 <div class="col-md-8 col-lg-6 col-xxl-3">
                     <div class="card mb-0">
                         <div class="card-body">
-                            <a href="/login" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                            <a href="/" class="text-nowrap logo-img text-center d-block py-3 w-100">
                                 <img src="../assets/images/logos/SIMKO.svg" width="180" alt="">
                             </a>
+                            <?php if (session()->getFlashdata('gagal')) : ?>
+                            <div class="alert alert-danger" role="alert">
+                            <?= session()->getFlashdata('gagal'); ?>
+                            </div>
+                            <?php endif; ?>
                             <form action="/login/prosesLogin" method="post">
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Username</label>
-                                    <input type="text" name="username" class="form-control" id="username" aria-describedby="emailHelp">
+                                    <input type="text" name="username" class="form-control" value="<?= old('username') ?>" id="username" aria-describedby="emailHelp">
                                     <?php if(session()->has('errors.username')): ?>
                                         <div class="text-danger"><?= session('errors.username') ?></div>
                                     <?php endif; ?>
                                 </div>
                                 <div class="mb-4">
                                     <label for="password" class="form-label">Password</label>
-                                    <input type="password" name="password" class="form-control" id="password">
+                                    <input type="password" name="password" class="form-control" id="password" value="<?= old('password') ?>">
                                     <?php if(session()->has('errors.password')): ?>
                                         <div class="text-danger"><?= session('errors.password') ?></div>
                                     <?php endif; ?>

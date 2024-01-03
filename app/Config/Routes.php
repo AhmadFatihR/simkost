@@ -8,7 +8,8 @@ use CodeIgniter\Router\RouteCollection;
  */
 
  //User Routes
-$routes->get('/', 'Home::index', ['filter' => 'isPenghuni']);
+$routes->get('/', 'Login::index');
+$routes->get('/home', 'Home::index', ['filter' => 'isPenghuni']);
 $routes->get('/komplain', 'KomplainUser::index', ['filter' => 'isPenghuni']);
 $routes->post('/komplain/save', 'KomplainUser::save', ['filter' => 'isPenghuni']);
 $routes->get('/history', 'TagihanUser::index',['filter' => 'isPenghuni']);
@@ -42,7 +43,16 @@ $routes->delete('/akun_user/delete/(:num)', 'Akun::delete/$1', ['filter' => 'isA
 $routes->get('akun_user/update', 'Akun::update', ['filter' => 'isAdmin']);
 
 //Routes Login
-$routes->get('/login', 'Login::Index');
+// $routes->get('/login', 'Login::Index');
 $routes->post('/login/prosesLogin','Login::prosesLogin');
+$routes->post('/logout', 'Login::logout');
 
 
+
+
+
+
+
+
+
+$routes->get('/history/(:segment)', 'TagihanUser::index/$1',['filter' => 'isPenghuni']);

@@ -1,26 +1,5 @@
 <div class="container-fluid">
-    <div class="row row-cols-1 row-cols-md-3">
-        <div class="col">
-            <!-- Card: Jumlah Tagihan -->
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-start">
-                        <div class="col-8">
-                            <h5 class="card-title mb-3 fw-semibold">Jumlah Tagihan</h5>
-                            <h4 class="fw-semibold mb-0">8</h4>
-                        </div>
-                        <div class="col-4">
-                            <div class="d-flex justify-content-end">
-                                <div class="text-white bg-success rounded-circle p-3 d-flex align-items-center justify-content-center">
-                                    <i class="ti ti-clipboard-text fs-5"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+    <div class="row row-cols-1 row-cols-md-2">
         <div class="col">
             <!-- Card: Total Komplain -->
             <div class="card">
@@ -49,7 +28,7 @@
                     <div class="row align-items-start">
                         <div class="col-8">
                             <h5 class="card-title mb-3 fw-semibold">Total Tagihan</h5>
-                            <h4 class="fw-semibold mb-0">Rp 100.000</h4>
+                            <h4 class="fw-semibold mb-0"><?= 'Rp ' . number_format($jumlahTagihan, 0, ',', '.'); ?></h4>
                         </div>
                         <div class="col-4">
                             <div class="d-flex justify-content-end">

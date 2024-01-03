@@ -59,29 +59,18 @@ class Kamar extends BaseController
 
         if (!$this->validate([
             'nomor_kamar' => [
-                'rules' => 'required|is_unique[kamar.nomor_kamar]',
-                'errors' => [
-                    'required' => 'Nomor kamar harus diisi.',
-                    'is_unique' => 'Nomor kamar sudah terdaftar.'
-                ]
+                'rules' => 'required|is_unique[kamar.nomor_kamar]'
             ],
             'gambar' => [
-                'rules' => 'max_size[gambar,10024]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
-                'errors' => [
-                    'max_size' => 'Ukuran gambar terlalu besar (maks. 10MB).',
-                    'is_image' => 'File yang diunggah harus berupa gambar.',
-                    'mime_in' => 'Format gambar tidak sesuai (hanya .jpg, .jpeg, .png yang diizinkan).'
-                ]
+                'rules' => 'max_size[gambar,10024]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]'
             ]
         ])) {
             // Menampilkan error validasi
             return redirect()->to('/kamar')->withInput()->with('validation', $validation);
         }
 
-        // Ambil data dari form
         $data = $this->request->getVar();
 
-        // Format harga menjadi angka tanpa tanda mata uang atau pemisah ribuan
         $data['harga'] = (int) str_replace(['Rp ', '.', ','], '', $data['harga']);
 
         //ambil gambar
@@ -93,7 +82,7 @@ class Kamar extends BaseController
         // generate nama gambar baru
         $namaGambar = $fileGambar->getRandomName();
         // pindahkan file ke folder img
-        $fileGambar->move('img');
+        $fileGambar->move('img',$namaGambar);
         }
 
 
@@ -141,7 +130,7 @@ class Kamar extends BaseController
 {
     $fileGambar = $this->request->getFile('gambar');
     if ($fileGambar->getName() == '') {
-        echo 'tidak mengupdate gambaer';
+        echo 'tidak mengupdate gambar';
     }
     else {
         echo 'update gambar';
@@ -151,19 +140,10 @@ class Kamar extends BaseController
 
     $validationRules = [
         'nomor_kamar' => [
-            'rules' => "required|is_unique[kamar.nomor_kamar,id_kamar,$id_kamar]",
-            'errors' => [
-                'required' => 'Nomor kamar harus diisi.',
-                'is_unique' => 'Nomor kamar sudah terdaftar.'
-            ]
+            'rules' => "required|is_unique[kamar.nomor_kamar,id_kamar,$id_kamar]"
         ],
         'gambar' => [
-            'rules' => 'max_size[gambar,10024]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
-            'errors' => [
-                'max_size' => 'Ukuran gambar terlalu besar (maks. 10MB).',
-                'is_image' => 'File yang diunggah harus berupa gambar.',
-                'mime_in' => 'Format gambar tidak sesuai (hanya .jpg, .jpeg, .png yang diizinkan).'
-            ]
+            'rules' => 'max_size[gambar,10024]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]'
         ]
     ];
 

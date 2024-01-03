@@ -3,7 +3,7 @@
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="/" class="text-nowrap logo-img">
+          <a href="/home" class="text-nowrap logo-img">
             <img src="../assets/images/logos/SIMKO.svg" width="160" alt="" />
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
@@ -18,7 +18,7 @@
               <span class="hide-menu">Home</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="/" aria-expanded="false">
+              <a class="sidebar-link" href="/home" aria-expanded="false">
                 <span>
                   <i class="ti ti-layout-dashboard"></i>
                 </span>
@@ -49,14 +49,16 @@
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Keluar</span>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="/login" aria-expanded="false">
-                <span>
-                  <i class="ti ti-logout"></i>
-                </span>
-                <span class="hide-menu">Logout</span>
-              </a>
-            </li>
+            <form action="/logout" method="post">
+              <li class="sidebar-item">
+                <button class="btn btn-secondary" type="submit" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-logout"></i>
+                  </span>
+                  <span class="hide-menu">Logout</span>
+                </button>
+              </li>
+            </form>
           </ul>
         </nav>
         <!-- End Sidebar navigation -->

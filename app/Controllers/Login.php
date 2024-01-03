@@ -44,7 +44,7 @@ class Login extends BaseController
 
         if (!$validation->withRequest($this->request)->run()) {
             // Validasi gagal, kembali ke halaman login dengan pesan error
-            return redirect()->to('/login')->withInput()->with('errors', $validation->getErrors());
+            return redirect()->to('/')->withInput()->with('errors', $validation->getErrors());
         }
 
         // Ambil data dari formulir login
@@ -55,10 +55,18 @@ class Login extends BaseController
         $akunModel = new AkunModel();
 
         // Proses login menggunakan model
-        $user = $akunModel->login($username, $password);
+        $user = $akunModel->where('username', $username)->first();
+
+        // Periksa apakah pengguna ditemukan dan cocok dengan password yang diberikan
+        if ($user && $password == $user['password']) {
+            $dataUser = $user; // Mengembalikan data pengguna jika login berhasil
+        } else {
+            session()->setFlashdata('gagal', 'Username atau password salah');
+            return redirect()->back()->withInput();
+        }
 
         // Periksa apakah login berhasil
-        if ($user !== null) {
+        if ($dataUser != null) {
             // Login berhasil
             $role = $user['role'];
             session()->set('id_user', $user['id_user']);
@@ -74,7 +82,7 @@ class Login extends BaseController
                 session()->set('status_login', true);
                 session()->set('username', $user['username']);
                 session()->set('password', $user['password']);
-                return redirect()->to('/');         
+                return redirect()->to('/home');         
             }
         } else {
             // Login gagal, kembali ke halaman login
@@ -82,5 +90,11 @@ class Login extends BaseController
         }
     }
 
-    // Method lain seperti register, logout, dll. bisa ditambahkan sesuai kebutuhan
+    public function logout()
+    {
+        session()->destroy();
+
+        return redirect()->to('/');
+    }
+
 }

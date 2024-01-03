@@ -72,8 +72,8 @@
                 <div class="card-body">
                     <div class="row align-items-start">
                         <div class="col-8">
-                            <h5 class="card-title mb-3 fw-semibold">Jumlah Tagihan</h5>
-                            <h4 class="fw-semibold mb-0">3</h4>
+                            <h5 class="card-title mb-3 fw-semibold">Jumlah Tagihan Belum Lunas</h5>
+                            <h4 class="fw-semibold mb-0"><?= $jumlah_tagihan; ?></h4>
                         </div>
                         <div class="col-4">
                             <div class="d-flex justify-content-end">
@@ -92,7 +92,7 @@
             <div class="card mb-3 text-center">
                 <img src="../assets/images/backgrounds/tes.png" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Selamat datang di aplikasi SIMKOST.</h5>
+                    <h5 class="card-title">Selamat datang <span class="fw-bold"><?= $namaUser; ?></span> di aplikasi SIMKOST.</h5>
                     <p class="card-text">Aplikasi ini memudahkan Anda dalam melihat history transaksi dan melaporkan kendala terkait fasilitas kost.</p>
                 </div>
             </div>

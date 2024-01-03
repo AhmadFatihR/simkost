@@ -23,7 +23,8 @@ class Tagihan extends BaseController
             'subjudul' => 'Laporan Tagihan',
             'tagihan' => $this->tagihanModel->getPenghuniwithTagihan(),
             'penghuni' => $this->penghuniModel->getAllPenghuni(),
-            'status_opsi' => ['Lunas', 'Belum Lunas']
+            'status_opsi' => ['Lunas', 'Belum lunas'],
+            'bulan_sewa' => ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
         ];
         echo view('layout/header',$data);
         echo view('layout/sidebar_admin');
@@ -35,14 +36,18 @@ class Tagihan extends BaseController
     public function save()
     {
         $data = $this->request->getVar();
+        // dd($data);
         $data['jumlah_pembayaran'] = (int) str_replace(['Rp ', '.', ','], '', $data['jumlah_pembayaran']);
-        $data['status_opsi'] = ['Lunas', 'Belum Lunas'];
+        $data['status_opsi'] = ['Lunas', 'Belum lunas'];
+        $data['bulan_sewa'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
-        $request = $this->tagihanModel->save([
+        $request = $this->tagihanModel->insert([
+            'id_tagihan' => '',
             'id_penghuni' => $data['nama_penghuni'],
             'tanggal_pembayaran' => $data['tanggal_pembayaran'],
             'jumlah_pembayaran' => $data['jumlah_pembayaran'],
-            'status_pembayaran' => $data['status_pembayaran']
+            'status_pembayaran' => $data['status_pembayaran'],
+            'bulan' => $data['bulan']
         ]);
 
         if ($request){
@@ -63,13 +68,14 @@ class Tagihan extends BaseController
     public function update()
     {
         $data  =  $this->request->getVar();
-        //dd($data);
+        // dd($data);
         $id_transaksi = $this->request->getGet('id_transaksi');
         $tagihanModel = new TagihanModel();
         $dataToUpdate = [
             'id_penghuni' => $data['nama_penghuni'],
             'tanggal_pembayaran' => $data['tanggal_pembayaran'],
             'jumlah_pembayaran' => $data['jumlah_pembayaran'],
+            'bulan' => $data['bulan'],
             'status_pembayaran' => $data['status_pembayaran'], 
         ];
 
